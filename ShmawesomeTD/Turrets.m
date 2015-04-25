@@ -13,15 +13,15 @@
 
 +(instancetype)defaultTurret{
     Turrets *turret = [super spriteNodeWithImageNamed:@"lilturret"];
-    turret.name = @"defaultMob";
-//    turret.anchorPoint = CGPointZero;
+    turret.name = @"defaultTurret";
+//    turret.anchorPoint = CGPointMake(turret.size.width/2, turret.size.height/2);
     turret.damage = 34;
+//    turret.size = CGSizeMake(40, 50);
     turret.fireRate = 4.7;
     turret.turretType = LightTurret;
     turret.zPosition = 4;
     return turret;
 }
-
 
 
 

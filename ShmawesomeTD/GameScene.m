@@ -44,12 +44,13 @@
     /* Setup your scene here */
 
 
-    [self addChild:self.towerBase];
+    [self spawnBaseShip];
     [self addChild:self.welcomeLabel];
-    [self addChild:self.bgNode1];
-    [self addChild:self.bgNode2];
-    }
+}
 
+
+
+#pragma mark ||touches||
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     for (UITouch *touch in touches) {
@@ -59,12 +60,12 @@
         [self sendMobProperly];
         [self.welcomeLabel removeFromParent];
         }
-/*        spawn particlz frm node emittr
+//    spawn particlz frm node emittr
         if ([node isKindOfClass:[Mobs class]]){
             [((Mobs *)node) takeDamage:100];
-            [node removeFromParent];
-        } 
- */
+//            [node removeFromParent];
+        }
+ 
         
 
     }
@@ -93,6 +94,7 @@
 
 -(void)bumpBackground{
     
+    
     self.bgNode1.position = CGPointMake(self.bgNode1.position.x, self.bgNode1.position.y-4);
     self.bgNode2.position = CGPointMake(self.bgNode2.position.x, self.bgNode2.position.y-4);
     
@@ -106,17 +108,50 @@
     
 }
 
+-(void)spawnBaseShip{
+    [self addChild:self.towerBase];
+    
+    
+}
+-(void)fireBullets{
+    if (!self.towerBase) return;
+    [[self.towerBase children] enumerateObjectsUsingBlock:^(Turrets *turat, NSUInteger idx, BOOL *stop) {
+
+        
+//        FOr turrets in towerbase, [Turret Fire]
+        
+        SKAction *carrotSequence = [SKAction runBlock:^{
+            
+        SKSpriteNode *carrotz = [SKSpriteNode spriteNodeWithImageNamed:@"carrotMissile"];
+            carrotz.position = CGPointMake(turat.position.x, turat.position.y);
+            [self.towerBase addChild:carrotz];
+            SKAction *fire = [SKAction moveToY:(self.size.height + 100) duration:1.0];
+            [carrotz runAction:fire];
+            
+            
+            
+        }];
+        
+        SKAction *wait = [SKAction waitForDuration:turat.fireRate];
+        SKAction *machineGun = [SKAction repeatActionForever:[SKAction sequence:@[carrotSequence,wait]]];
+        [self runAction:machineGun];
+    
+    }];
+    
+}
+
+
 
 -(void)sendMobProperly{
 
     if ([self.mobBank count] == 0) {
         self.mobBank = nil;
-        self.waveRunning = NO;
+
         self.welcomeLabel.text = @"Nice job buddy! try another??";
         [self addChild:self.welcomeLabel];
         return;
     }
-    self.waveRunning = YES;
+
     Mobs *mob = ((Mobs *)self.mobBank[0]);
     mob.delegate = self;
     mob.size = CGSizeMake(self.size.width / 8, self.size.height / 8);
@@ -142,6 +177,7 @@
         _bgNode1 = [SKSpriteNode spriteNodeWithImageNamed:@"sideBack"];
         _bgNode1.zPosition = -5;
         _bgNode1.position = CGPointMake(self.size.width/2, self.size.height/2);
+        [self addChild:_bgNode1];
     }
     return _bgNode1;
 }
@@ -152,6 +188,7 @@
         _bgNode2 = [SKSpriteNode spriteNodeWithImageNamed:@"sideBack"];
         _bgNode2.zPosition = -5;
         _bgNode2.position = CGPointMake(self.size.width/2, self.size.height/2 + _bgNode2.size.height-1);
+        [self addChild:_bgNode2];
     }
     return _bgNode2;
 }
@@ -159,15 +196,23 @@
 -(SKSpriteNode *)towerBase{
     if (!_towerBase){
         _towerBase = [SKSpriteNode spriteNodeWithImageNamed:@"towerBase"];
-        _towerBase.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(_towerBase.frame)+ 20);
-        [_towerBase addChild:[Turrets defaultTurret]];
-        [_towerBase addChild:[Turrets defaultTurret]];
-        [_towerBase addChild:[Turrets defaultTurret]];
-        [_towerBase addChild:[Turrets defaultTurret]];
-        [_towerBase addChild:[Turrets defaultTurret]];
+
+        _towerBase.anchorPoint = CGPointZero;
+        _towerBase.position = CGPointMake(_towerBase.frame.size.width / 2, 0);
+
+        for (int i = 0; i<5; i++) {
+            [_towerBase addChild:[Turrets defaultTurret]];
+            ((SKNode *)[_towerBase children][i]).position = CGPointMake((_towerBase.size.width / 6) * (i+1), 50);
+        }
         [[_towerBase children] enumerateObjectsUsingBlock:^(Turrets *turat, NSUInteger idx, BOOL *stop) {
-            turat.position = CGPointMake(_towerBase.size.width * ((idx+1) / [[_towerBase children] count]),CGRectGetMidY(_towerBase.frame));
+//            turat.position = CGPointMake(self.size.width / ([[_towerBase children] count] + 1) * ((idx+1)), 0);
+//            (-_towerBase.size.width / 2)
+            NSLog(@"turret at %@",NSStringFromCGPoint(turat.position));
         }];
+        NSLog(@"self.frame = %@",NSStringFromCGRect(self.frame));
+        NSLog(@"towerbase frame = %@",NSStringFromCGRect(_towerBase.frame));
+        NSLog(@"%lu",(unsigned long)[[_towerBase children] count]);
+        [self fireBullets];
     }
     return _towerBase;
 }
@@ -182,6 +227,10 @@
 
 -(NSMutableArray *)waveBank{
     if (!_waveBank){
+        
+//        just make all the mob arrays here? set self.mobbank to current and wipe it when iterated through. if !WB builds the waves, then ever get
+        
+        
         _waveBank = [NSMutableArray array];
         [_waveBank addObject:self.mobBank];
         [_waveBank addObject:self.mobBank];
@@ -196,11 +245,20 @@
     if (!_mobBank){
         _mobBank = [NSMutableArray array];
         [_mobBank addObject:[Mobs defaultMob]];
+        [_mobBank addObject:[Mobs mediumMob]];
         [_mobBank addObject:[Mobs defaultMob]];
         [_mobBank addObject:[Mobs defaultMob]];
         [_mobBank addObject:[Mobs defaultMob]];
-        [_mobBank addObject:[Mobs defaultMob]];
-        [_mobBank addObject:[Mobs defaultMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
+        [_mobBank addObject:[Mobs lightMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
+        [_mobBank addObject:[Mobs lightMob]];
+        [_mobBank addObject:[Mobs mediumMob]];
+        [_mobBank addObject:[Mobs lightMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
+        [_mobBank addObject:[Mobs heavyMob]];
     }
     return _mobBank;
 }

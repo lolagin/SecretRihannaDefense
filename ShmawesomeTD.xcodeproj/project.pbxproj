@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D56C6D11AEAF9CC00D6D796 /* harrier.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D01AEAF9CC00D6D796 /* harrier.png */; };
+		6D56C6D31AEAFA8800D6D796 /* fantom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D21AEAFA8800D6D796 /* fantom.png */; };
+		6D56C6D51AEAFB8500D6D796 /* superhornet.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D41AEAFB8500D6D796 /* superhornet.png */; };
+		6D56C6D71AEB05DA00D6D796 /* carrotMissile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */; };
+		6D56C6D91AEB148400D6D796 /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D81AEB148400D6D796 /* explosion.atlas */; };
 		6D8663051AE82F980032240B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8663041AE82F980032240B /* main.m */; };
 		6D8663081AE82F980032240B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8663071AE82F980032240B /* AppDelegate.m */; };
 		6D86630B1AE82F980032240B /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D86630A1AE82F980032240B /* GameScene.m */; };
@@ -35,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D56C6D01AEAF9CC00D6D796 /* harrier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = harrier.png; sourceTree = "<group>"; };
+		6D56C6D21AEAFA8800D6D796 /* fantom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fantom.png; sourceTree = "<group>"; };
+		6D56C6D41AEAFB8500D6D796 /* superhornet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = superhornet.png; sourceTree = "<group>"; };
+		6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carrotMissile.png; sourceTree = "<group>"; };
+		6D56C6D81AEB148400D6D796 /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
 		6D8662FF1AE82F980032240B /* ShmawesomeTD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShmawesomeTD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8663031AE82F980032240B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D8663041AE82F980032240B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,9 +123,14 @@
 				6D86630F1AE82F980032240B /* GameViewController.m */,
 				6D8663111AE82F980032240B /* Main.storyboard */,
 				6DD9B8C31AE98EE6009E77E3 /* sideback.png */,
+				6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */,
 				6DD9B8D61AE9F3F4009E77E3 /* towerBase.png */,
+				6D56C6D21AEAFA8800D6D796 /* fantom.png */,
+				6D56C6D01AEAF9CC00D6D796 /* harrier.png */,
 				6DD9B8DB1AEA1B06009E77E3 /* lilturret.png */,
+				6D56C6D41AEAFB8500D6D796 /* superhornet.png */,
 				6DD9B89C1AE9774C009E77E3 /* pingstealth.png */,
+				6D56C6D81AEB148400D6D796 /* explosion.atlas */,
 				6D8663141AE82F980032240B /* Images.xcassets */,
 				6D8663161AE82F980032240B /* LaunchScreen.xib */,
 				6D8663021AE82F980032240B /* Supporting Files */,
@@ -232,9 +247,14 @@
 				6D8663181AE82F980032240B /* LaunchScreen.xib in Resources */,
 				6D8663151AE82F980032240B /* Images.xcassets in Resources */,
 				6D86630D1AE82F980032240B /* GameScene.sks in Resources */,
+				6D56C6D71AEB05DA00D6D796 /* carrotMissile.png in Resources */,
 				6DD9B8D71AE9F3F4009E77E3 /* towerBase.png in Resources */,
 				6D8663131AE82F980032240B /* Main.storyboard in Resources */,
+				6D56C6D11AEAF9CC00D6D796 /* harrier.png in Resources */,
 				6DD9B8C41AE98EE6009E77E3 /* sideback.png in Resources */,
+				6D56C6D91AEB148400D6D796 /* explosion.atlas in Resources */,
+				6D56C6D31AEAFA8800D6D796 /* fantom.png in Resources */,
+				6D56C6D51AEAFB8500D6D796 /* superhornet.png in Resources */,
 				6DD9B89D1AE9774D009E77E3 /* pingstealth.png in Resources */,
 				6DD9B8DC1AEA1B06009E77E3 /* lilturret.png in Resources */,
 			);
