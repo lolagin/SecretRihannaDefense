@@ -7,8 +7,7 @@
 //
 
 #import "Turrets.h"
-
-
+#import "Mobs.h"
 @implementation Turrets
 
 +(instancetype)defaultTurret{
@@ -17,11 +16,14 @@
 //    turret.anchorPoint = CGPointMake(turret.size.width/2, turret.size.height/2);
     turret.damage = 34;
 //    turret.size = CGSizeMake(40, 50);
-    turret.fireRate = 4.7;
+    turret.fireRate = 1.7;
+    turret.projectileSpeed = 1.3;
     turret.turretType = LightTurret;
     turret.zPosition = 4;
     return turret;
 }
+
+
 
 
 

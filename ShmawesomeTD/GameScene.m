@@ -10,11 +10,17 @@
 #import "Mobs.h"
 #import "Turrets.h"
 
-@interface GameScene () <DeathProtocol>
+
+static const u_int32_t kSceneEdgeCategory = 0x1 << 3;
+static const u_int32_t kFiredBulletCategory = 0x1 << 4;
+
+
+
+@interface GameScene () <DeathProtocol, SKPhysicsContactDelegate>
 
 
 @property (assign, nonatomic) BOOL waveRunning;
-
+@property (assign, nonatomic) BOOL gameRunning;
 
 @property (strong, nonatomic) NSMutableArray *turretBank;
 @property (strong, nonatomic) NSMutableArray *mobBank; //current wave
@@ -25,6 +31,9 @@
 @property (strong, nonatomic) SKSpriteNode *bgNode1;
 @property (strong, nonatomic) SKSpriteNode *bgNode2;
 @property (strong, nonatomic) NSTimer *mobTimer;
+
+
+@property (strong) NSMutableArray* contactQueue;
 //-intro method in viewdidload-- series of label node actions, squad taking fire and going down. superships are tasked with whatever
 // ^^ -present label with character and message
 
@@ -38,12 +47,32 @@
 @implementation GameScene
 
 
+-(void)didBeginContact:(SKPhysicsContact *)contact{
+    
+    [self.contactQueue addObject:contact];
+    
+}
 
+-(void)bulletContact:(SKPhysicsContact *)contact{
+    if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) return;
+    
+    if ([contact.bodyB.node isKindOfClass:[Mobs class]]) {
+        [(Mobs *)contact.bodyB.node takeDamage:100];
+        [(SKSpriteNode *)contact.bodyA.node removeFromParent];
+    }
+}
 
+-(void)processContactsForUpdate:(NSTimeInterval)currentTime {
+    for (SKPhysicsContact* contact in [self.contactQueue copy]) {
+        [self bulletContact:contact];
+        [self.contactQueue removeObject:contact];
+    }
+}
 -(void)didMoveToView:(SKView *)view {
     /* Setup your scene here */
-
-
+    self.contactQueue = [NSMutableArray array];
+    self.physicsWorld.contactDelegate = self;
+    self.physicsBody.categoryBitMask = kSceneEdgeCategory;
     [self spawnBaseShip];
     [self addChild:self.welcomeLabel];
 }
@@ -84,8 +113,10 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-
+//    if (!self.gameRunning) return;
     
+    
+    [self processContactsForUpdate:currentTime];
     [self bumpBackground];
     
 }
@@ -113,19 +144,24 @@
     
     
 }
+
+#pragma mark ||BULLETZ||
 -(void)fireBullets{
     if (!self.towerBase) return;
     [[self.towerBase children] enumerateObjectsUsingBlock:^(Turrets *turat, NSUInteger idx, BOOL *stop) {
-
-        
-//        FOr turrets in towerbase, [Turret Fire]
         
         SKAction *carrotSequence = [SKAction runBlock:^{
-            
         SKSpriteNode *carrotz = [SKSpriteNode spriteNodeWithImageNamed:@"carrotMissile"];
             carrotz.position = CGPointMake(turat.position.x, turat.position.y);
+            carrotz.name = @"carrot";
+            carrotz.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:carrotz.frame.size];
+            carrotz.physicsBody.dynamic = YES;
+            carrotz.physicsBody.categoryBitMask = kFiredBulletCategory;
+            carrotz.physicsBody.contactTestBitMask = kInvaderCategory;
+            carrotz.physicsBody.collisionBitMask = 0x0;
+            carrotz.physicsBody.affectedByGravity = NO;
             [self.towerBase addChild:carrotz];
-            SKAction *fire = [SKAction moveToY:(self.size.height + 100) duration:1.0];
+            SKAction *fire = [SKAction moveToY:(self.size.height + 100) duration:turat.projectileSpeed];
             [carrotz runAction:fire];
             
             
@@ -143,26 +179,27 @@
 
 
 -(void)sendMobProperly{
-
+    
     if ([self.mobBank count] == 0) {
         self.mobBank = nil;
-
+        
         self.welcomeLabel.text = @"Nice job buddy! try another??";
         [self addChild:self.welcomeLabel];
         return;
     }
-
+    
     Mobs *mob = ((Mobs *)self.mobBank[0]);
     mob.delegate = self;
-    mob.size = CGSizeMake(self.size.width / 8, self.size.height / 8);
+    CGFloat randPos = ((arc4random_uniform(6) + 1) * (self.size.width / 7));
+    mob.position = CGPointMake(randPos, self.size.height);
+    mob.size = CGSizeMake(self.size.width / 12, self.size.height / 8);
+    mob.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:mob.frame.size];
+    [self addChild:mob];
     SKAction *flight = [SKAction moveToY:-200.0 duration:mob.mobSpeed];
-            CGFloat randPos = ((arc4random_uniform(6) + 1) * (self.size.width / 7));
-            mob.position = CGPointMake(randPos, self.size.height);
-            [self addChild:mob];
-            [mob runAction:flight completion:^{
-            [mob removeFromParent];
-        }];
-        [self runAction:[SKAction waitForDuration:1.0]completion:^{
+    [mob runAction:flight completion:^{
+        [mob removeFromParent];
+    }];
+    [self runAction:[SKAction waitForDuration:1.0]completion:^{
         [self.mobBank removeObjectAtIndex:0];
         self.waveRunning = NO;
         [self sendMobProperly];
@@ -196,17 +233,13 @@
 -(SKSpriteNode *)towerBase{
     if (!_towerBase){
         _towerBase = [SKSpriteNode spriteNodeWithImageNamed:@"towerBase"];
-
         _towerBase.anchorPoint = CGPointZero;
         _towerBase.position = CGPointMake(_towerBase.frame.size.width / 2, 0);
-
         for (int i = 0; i<5; i++) {
             [_towerBase addChild:[Turrets defaultTurret]];
             ((SKNode *)[_towerBase children][i]).position = CGPointMake((_towerBase.size.width / 6) * (i+1), 50);
         }
         [[_towerBase children] enumerateObjectsUsingBlock:^(Turrets *turat, NSUInteger idx, BOOL *stop) {
-//            turat.position = CGPointMake(self.size.width / ([[_towerBase children] count] + 1) * ((idx+1)), 0);
-//            (-_towerBase.size.width / 2)
             NSLog(@"turret at %@",NSStringFromCGPoint(turat.position));
         }];
         NSLog(@"self.frame = %@",NSStringFromCGRect(self.frame));
@@ -247,6 +280,10 @@
         [_mobBank addObject:[Mobs defaultMob]];
         [_mobBank addObject:[Mobs mediumMob]];
         [_mobBank addObject:[Mobs defaultMob]];
+        [_mobBank addObject:[Mobs kanyeMob]];
+        [_mobBank addObject:[Mobs kanyeMob]];
+        [_mobBank addObject:[Mobs kanyeMob]];
+        [_mobBank addObject:[Mobs kanyeMob]];        
         [_mobBank addObject:[Mobs defaultMob]];
         [_mobBank addObject:[Mobs defaultMob]];
         [_mobBank addObject:[Mobs heavyMob]];

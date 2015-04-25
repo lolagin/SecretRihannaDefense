@@ -12,7 +12,7 @@ typedef enum mobType {
     MobTypeB,
     MobTypeC
 } MobType;
-
+static const u_int32_t kInvaderCategory            = 0x1 << 0;
 @class GameScene;
 @protocol DeathProtocol
 -(void)mobDeath;
@@ -28,6 +28,7 @@ typedef enum mobType {
 +(instancetype)lightMob;
 +(instancetype)mediumMob;
 +(instancetype)heavyMob;
++(instancetype)kanyeMob;
 
 
 -(void)takeDamage:(NSUInteger)damage;

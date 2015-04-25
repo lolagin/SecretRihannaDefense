@@ -14,6 +14,7 @@ typedef enum turretType {
 } TurretType;
 @interface Turrets : SKSpriteNode
 @property (assign, nonatomic) NSUInteger fireRate;
+@property (assign, nonatomic) NSUInteger projectileSpeed;
 @property (assign, nonatomic) NSUInteger damage;
 @property (assign, nonatomic) TurretType turretType;
 +(instancetype)defaultTurret;

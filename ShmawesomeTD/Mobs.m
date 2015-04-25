@@ -7,6 +7,11 @@
 //
 
 #import "Mobs.h"
+
+
+
+
+
 @interface Mobs ()
 @property (strong, nonatomic) SKTextureAtlas *tex;
 @property (strong, nonatomic) NSMutableArray *explosion;
@@ -16,47 +21,52 @@
 
 @implementation Mobs
 @synthesize delegate;
-
-+(instancetype)defaultMob{
-    Mobs *mob = [super spriteNodeWithImageNamed:@"harrier"];
++(instancetype)mobWithImageNamed:(NSString *)name{
+    Mobs *mob = [super spriteNodeWithImageNamed:name];
     mob.name = @"defaultMob";
     mob.anchorPoint = CGPointZero;
-    mob.mobHealth = 100;
-    mob.mobSpeed = 4.7;
     mob.zPosition = 5;
+    mob.physicsBody.dynamic = NO;
+    mob.physicsBody.categoryBitMask = kInvaderCategory;
+    mob.physicsBody.contactTestBitMask = 0x0;
+    mob.physicsBody.collisionBitMask = 0x0;
+    return mob;
+}
++(instancetype)defaultMob{
+    Mobs *mob = [Mobs mobWithImageNamed:@"pingstealth"];
+    mob.mobHealth = 100;
+    mob.mobSpeed = 2.7;
+
     return mob;
 }
 
 +(instancetype)lightMob{
-    Mobs *mob = [super spriteNodeWithImageNamed:@"superhornet"];
-    mob.name = @"defaultMob";
-    mob.anchorPoint = CGPointZero;
+    Mobs *mob = [Mobs mobWithImageNamed:@"superhornet"];
     mob.mobHealth = 100;
     mob.mobSpeed = 4.7;
-    mob.zPosition = 5;
     return mob;
 }
 
 +(instancetype)mediumMob{
-    Mobs *mob = [super spriteNodeWithImageNamed:@"fantom"];
-    mob.name = @"defaultMob";
-    mob.anchorPoint = CGPointZero;
+    Mobs *mob = [Mobs mobWithImageNamed:@"fantom"];
     mob.mobHealth = 100;
-    mob.mobSpeed = 4.7;
-    mob.zPosition = 5;
+    mob.mobSpeed = 6.7;
     return mob;
 }
 
 +(instancetype)heavyMob{
-    Mobs *mob = [super spriteNodeWithImageNamed:@"harrier"];
-    mob.name = @"defaultMob";
-    mob.anchorPoint = CGPointZero;
+    Mobs *mob = [Mobs mobWithImageNamed:@"harrier"];
     mob.mobHealth = 100;
-    mob.mobSpeed = 4.7;
-    mob.zPosition = 5;
+    mob.mobSpeed = 5.0;
     return mob;
 }
 
++(instancetype)kanyeMob{
+    Mobs *mob = [Mobs mobWithImageNamed:@"kanyehead"];
+    mob.mobHealth = 100;
+    mob.mobSpeed = 2.0;
+    return mob;
+}
 
 -(void)setMobHealth:(NSUInteger)thing{
     if (thing > 0) {

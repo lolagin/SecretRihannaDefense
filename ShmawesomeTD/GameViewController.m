@@ -8,6 +8,7 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import "IntroScene.h"
 
 @implementation SKScene (Unarchive)
 
@@ -43,6 +44,27 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:)  name:UIApplicationDidBecomeActiveNotification  object:nil];
 
     // Configure the view.
+//    [self beginGameplay];
+    
+    SKView * skView = (SKView *)self.view;
+    skView.showsFPS = YES;
+    skView.showsNodeCount = YES;
+    /* Sprite Kit applies additional optimizations to improve rendering performance */
+    skView.ignoresSiblingOrder = YES;
+    
+    // Create and configure the scene.
+    IntroScene *scene = [IntroScene unarchiveFromFile:@"IntroScene"];
+    scene.scaleMode = SKSceneScaleModeAspectFill;
+    
+    // Present the scene.
+    [skView presentScene:scene];
+    
+    
+}
+
+
+
+-(void)beginGameplay{
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
@@ -55,7 +77,10 @@
     
     // Present the scene.
     [skView presentScene:scene];
+    
+    
 }
+
 
 - (BOOL)shouldAutorotate
 {
