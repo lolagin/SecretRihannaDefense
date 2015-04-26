@@ -7,9 +7,7 @@
 //
 
 #import "Mobs.h"
-
-
-
+#import "SKSpriteNode+Animations.h"
 
 
 @interface Mobs ()
@@ -18,14 +16,13 @@
 
 
 @end
-
 @implementation Mobs
 @synthesize delegate;
 +(instancetype)mobWithImageNamed:(NSString *)name{
     Mobs *mob = [super spriteNodeWithImageNamed:name];
-    mob.name = @"defaultMob";
     mob.anchorPoint = CGPointZero;
     mob.zPosition = 5;
+    mob.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:mob.frame.size];
     mob.physicsBody.dynamic = NO;
     mob.physicsBody.categoryBitMask = kInvaderCategory;
     mob.physicsBody.contactTestBitMask = 0x0;
@@ -34,6 +31,7 @@
 }
 +(instancetype)defaultMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"pingstealth"];
+    mob.name = @"defaultMob";
     mob.mobHealth = 100;
     mob.mobSpeed = 2.7;
 
@@ -42,6 +40,7 @@
 
 +(instancetype)lightMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"superhornet"];
+    mob.name = @"lightMob";
     mob.mobHealth = 100;
     mob.mobSpeed = 4.7;
     return mob;
@@ -49,6 +48,7 @@
 
 +(instancetype)mediumMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"fantom"];
+    mob.name = @"mediumMob";
     mob.mobHealth = 100;
     mob.mobSpeed = 6.7;
     return mob;
@@ -56,6 +56,7 @@
 
 +(instancetype)heavyMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"harrier"];
+    mob.name = @"heavyMob";
     mob.mobHealth = 100;
     mob.mobSpeed = 5.0;
     return mob;
@@ -73,8 +74,6 @@
         _mobHealth = thing;
     } else {
 //        EXPLOSION!!! (switch sprite to exploision atlas. yay
-        
-        [self.delegate mobDeath];
         [self explode];
     }
 }
@@ -83,8 +82,10 @@
     if (!self.mobHealth) return;
     self.mobHealth -= damage;
 }
+
 -(void)explode{
-     [self runAction:[SKAction animateWithTextures:self.explosion timePerFrame:0.1 resize:YES restore:NO]completion:^{
+    [self.delegate  mobDeath];
+    [self runAction:[SKAction animateWithTextures:self.explosion timePerFrame:0.08 resize:YES restore:NO]completion:^{
          [self removeFromParent];
      }];    
 }
@@ -99,15 +100,11 @@
 -(NSMutableArray *)explosion{
     if (_explosion) return _explosion;
     _explosion = [NSMutableArray array];
-    [self.tex.textureNames enumerateObjectsUsingBlock:^(NSString *boomName, NSUInteger idx, BOOL *stop) {
-        [_explosion addObject:[self.tex textureNamed:boomName]];
-        
-    }];
-
+    if (self.tex){
+        _explosion = [SKSpriteNode textureArrayFromAtlas:self.tex];
+    }
     return _explosion;
 }
-
-
 @end
 
 

@@ -9,10 +9,10 @@
 #import "GameScene.h"
 #import "Mobs.h"
 #import "Turrets.h"
+#import "SKSpriteNode+Animations.h"
 
 
-static const u_int32_t kSceneEdgeCategory = 0x1 << 3;
-static const u_int32_t kFiredBulletCategory = 0x1 << 4;
+
 
 
 
@@ -57,6 +57,7 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
     if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) return;
     
     if ([contact.bodyB.node isKindOfClass:[Mobs class]]) {
+        [(Mobs *)contact.bodyB.node removeActionForKey:@"flight"];
         [(Mobs *)contact.bodyB.node takeDamage:100];
         [(SKSpriteNode *)contact.bodyA.node removeFromParent];
     }
@@ -74,10 +75,20 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
     self.physicsWorld.contactDelegate = self;
     self.physicsBody.categoryBitMask = kSceneEdgeCategory;
     [self spawnBaseShip];
+    [self addChild:self.bgNode1];
+    [self addChild:self.bgNode2];
     [self addChild:self.welcomeLabel];
 }
 
-
+-(void)playTheFuckingGame{
+    
+    
+    [self sendMobProperly];
+    [self fireBullets];
+    self.gameRunning = YES;
+    
+    
+}
 
 #pragma mark ||touches||
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -86,8 +97,9 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
         CGPoint location = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:location];
         if ([node isEqualToNode:self.welcomeLabel]) {
-        [self sendMobProperly];
-        [self.welcomeLabel removeFromParent];
+            [self.welcomeLabel removeFromParent];
+               [self playTheFuckingGame];
+            return;
         }
 //    spawn particlz frm node emittr
         if ([node isKindOfClass:[Mobs class]]){
@@ -113,9 +125,9 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-//    if (!self.gameRunning) return;
-    
-    
+    if (!self.gameRunning) return;
+//    self fly mobs (use backgrounf method really )
+
     [self processContactsForUpdate:currentTime];
     [self bumpBackground];
     
@@ -149,7 +161,6 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
 -(void)fireBullets{
     if (!self.towerBase) return;
     [[self.towerBase children] enumerateObjectsUsingBlock:^(Turrets *turat, NSUInteger idx, BOOL *stop) {
-        
         SKAction *carrotSequence = [SKAction runBlock:^{
         SKSpriteNode *carrotz = [SKSpriteNode spriteNodeWithImageNamed:@"carrotMissile"];
             carrotz.position = CGPointMake(turat.position.x, turat.position.y);
@@ -161,10 +172,9 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
             carrotz.physicsBody.collisionBitMask = 0x0;
             carrotz.physicsBody.affectedByGravity = NO;
             [self.towerBase addChild:carrotz];
+            
             SKAction *fire = [SKAction moveToY:(self.size.height + 100) duration:turat.projectileSpeed];
             [carrotz runAction:fire];
-            
-            
             
         }];
         
@@ -177,14 +187,28 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
 }
 
 
-
+-(void)nextWave{
+    if ([self.waveBank count] == 0) {
+        return;
+//        END GAME situation, score sum etc..
+    }
+    
+    self.mobBank = nil;
+    
+    self.welcomeLabel.text = @"Nice job buddy! try another??";
+    [self addChild:self.welcomeLabel];
+    [self.waveBank removeObjectAtIndex:0];
+    [self.towerBase.children enumerateObjectsUsingBlock:^(Turrets *turret, NSUInteger idx, BOOL *stop) {
+        [turret removeAllActions];
+    }];
+}
+     
+     
+     
 -(void)sendMobProperly{
     
     if ([self.mobBank count] == 0) {
-        self.mobBank = nil;
-        
-        self.welcomeLabel.text = @"Nice job buddy! try another??";
-        [self addChild:self.welcomeLabel];
+        [self nextWave];
         return;
     }
     
@@ -214,7 +238,6 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
         _bgNode1 = [SKSpriteNode spriteNodeWithImageNamed:@"sideBack"];
         _bgNode1.zPosition = -5;
         _bgNode1.position = CGPointMake(self.size.width/2, self.size.height/2);
-        [self addChild:_bgNode1];
     }
     return _bgNode1;
 }
@@ -225,7 +248,6 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
         _bgNode2 = [SKSpriteNode spriteNodeWithImageNamed:@"sideBack"];
         _bgNode2.zPosition = -5;
         _bgNode2.position = CGPointMake(self.size.width/2, self.size.height/2 + _bgNode2.size.height-1);
-        [self addChild:_bgNode2];
     }
     return _bgNode2;
 }
@@ -245,7 +267,7 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
         NSLog(@"self.frame = %@",NSStringFromCGRect(self.frame));
         NSLog(@"towerbase frame = %@",NSStringFromCGRect(_towerBase.frame));
         NSLog(@"%lu",(unsigned long)[[_towerBase children] count]);
-        [self fireBullets];
+
     }
     return _towerBase;
 }
@@ -265,9 +287,6 @@ static const u_int32_t kFiredBulletCategory = 0x1 << 4;
         
         
         _waveBank = [NSMutableArray array];
-        [_waveBank addObject:self.mobBank];
-        [_waveBank addObject:self.mobBank];
-        [_waveBank addObject:self.mobBank];
         [_waveBank addObject:self.mobBank];
         [_waveBank addObject:self.mobBank];
     }

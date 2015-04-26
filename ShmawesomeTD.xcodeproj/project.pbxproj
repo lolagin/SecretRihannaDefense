@@ -11,13 +11,12 @@
 		6D56C6D31AEAFA8800D6D796 /* fantom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D21AEAFA8800D6D796 /* fantom.png */; };
 		6D56C6D51AEAFB8500D6D796 /* superhornet.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D41AEAFB8500D6D796 /* superhornet.png */; };
 		6D56C6D71AEB05DA00D6D796 /* carrotMissile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */; };
-		6D56C6D91AEB148400D6D796 /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6D81AEB148400D6D796 /* explosion.atlas */; };
 		6D56C6DD1AEB2B8F00D6D796 /* kanyehead.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6DC1AEB2B8F00D6D796 /* kanyehead.png */; };
 		6D56C6E01AEB3E0100D6D796 /* IntroScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D56C6DF1AEB3E0100D6D796 /* IntroScene.m */; };
-		6D56C6E51AEB41FD00D6D796 /* projectileDysfunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D56C6E41AEB41FD00D6D796 /* projectileDysfunction.m */; };
 		6D56C6E71AEB45A900D6D796 /* intro.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6E61AEB45A900D6D796 /* intro.png */; };
-		6D56C6ED1AEB50FC00D6D796 /* introsprite.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6EC1AEB50FC00D6D796 /* introsprite.atlas */; };
 		6D56C6EF1AEB54E800D6D796 /* IntroScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6EE1AEB54E700D6D796 /* IntroScene.sks */; };
+		6D56C6F71AECA3A000D6D796 /* introsprite.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6F61AECA3A000D6D796 /* introsprite.atlas */; };
+		6D56C6F91AECA3EB00D6D796 /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6D56C6F81AECA3EB00D6D796 /* explosion.atlas */; };
 		6D8663051AE82F980032240B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8663041AE82F980032240B /* main.m */; };
 		6D8663081AE82F980032240B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8663071AE82F980032240B /* AppDelegate.m */; };
 		6D86630B1AE82F980032240B /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D86630A1AE82F980032240B /* GameScene.m */; };
@@ -27,6 +26,8 @@
 		6D8663151AE82F980032240B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8663141AE82F980032240B /* Images.xcassets */; };
 		6D8663181AE82F980032240B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D8663161AE82F980032240B /* LaunchScreen.xib */; };
 		6D8663241AE82F980032240B /* ShmawesomeTDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8663231AE82F980032240B /* ShmawesomeTDTests.m */; };
+		6D9A45FC1AED511D00763B44 /* SKSpriteNode+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A45FB1AED511D00763B44 /* SKSpriteNode+Animations.m */; };
+		6D9A45FF1AED594800763B44 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A45FE1AED594800763B44 /* Bullet.m */; };
 		6DD9B89B1AE9693C009E77E3 /* Mobs.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD9B89A1AE9693C009E77E3 /* Mobs.m */; };
 		6DD9B89D1AE9774D009E77E3 /* pingstealth.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DD9B89C1AE9774C009E77E3 /* pingstealth.png */; };
 		6DD9B8C41AE98EE6009E77E3 /* sideback.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DD9B8C31AE98EE6009E77E3 /* sideback.png */; };
@@ -50,15 +51,13 @@
 		6D56C6D21AEAFA8800D6D796 /* fantom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fantom.png; sourceTree = "<group>"; };
 		6D56C6D41AEAFB8500D6D796 /* superhornet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = superhornet.png; sourceTree = "<group>"; };
 		6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carrotMissile.png; sourceTree = "<group>"; };
-		6D56C6D81AEB148400D6D796 /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
 		6D56C6DC1AEB2B8F00D6D796 /* kanyehead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kanyehead.png; sourceTree = "<group>"; };
 		6D56C6DE1AEB3E0100D6D796 /* IntroScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroScene.h; sourceTree = "<group>"; };
 		6D56C6DF1AEB3E0100D6D796 /* IntroScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroScene.m; sourceTree = "<group>"; };
-		6D56C6E31AEB41FD00D6D796 /* projectileDysfunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = projectileDysfunction.h; sourceTree = "<group>"; };
-		6D56C6E41AEB41FD00D6D796 /* projectileDysfunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = projectileDysfunction.m; sourceTree = "<group>"; };
 		6D56C6E61AEB45A900D6D796 /* intro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro.png; sourceTree = "<group>"; };
-		6D56C6EC1AEB50FC00D6D796 /* introsprite.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = introsprite.atlas; sourceTree = "<group>"; };
 		6D56C6EE1AEB54E700D6D796 /* IntroScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IntroScene.sks; sourceTree = "<group>"; };
+		6D56C6F61AECA3A000D6D796 /* introsprite.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = introsprite.atlas; sourceTree = "<group>"; };
+		6D56C6F81AECA3EB00D6D796 /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
 		6D8662FF1AE82F980032240B /* ShmawesomeTD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShmawesomeTD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8663031AE82F980032240B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D8663041AE82F980032240B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -75,6 +74,10 @@
 		6D86631D1AE82F980032240B /* ShmawesomeTDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShmawesomeTDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8663221AE82F980032240B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D8663231AE82F980032240B /* ShmawesomeTDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShmawesomeTDTests.m; sourceTree = "<group>"; };
+		6D9A45FA1AED511D00763B44 /* SKSpriteNode+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+Animations.h"; sourceTree = "<group>"; };
+		6D9A45FB1AED511D00763B44 /* SKSpriteNode+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+Animations.m"; sourceTree = "<group>"; };
+		6D9A45FD1AED594800763B44 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
+		6D9A45FE1AED594800763B44 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bullet.m; sourceTree = "<group>"; };
 		6DD9B8991AE9693C009E77E3 /* Mobs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mobs.h; sourceTree = "<group>"; };
 		6DD9B89A1AE9693C009E77E3 /* Mobs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mobs.m; sourceTree = "<group>"; };
 		6DD9B89C1AE9774C009E77E3 /* pingstealth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pingstealth.png; sourceTree = "<group>"; };
@@ -124,37 +127,13 @@
 		6D8663011AE82F980032240B /* ShmawesomeTD */ = {
 			isa = PBXGroup;
 			children = (
-				6D8663061AE82F980032240B /* AppDelegate.h */,
-				6D8663071AE82F980032240B /* AppDelegate.m */,
-				6D8663091AE82F980032240B /* GameScene.h */,
-				6D86630A1AE82F980032240B /* GameScene.m */,
-				6D56C6E31AEB41FD00D6D796 /* projectileDysfunction.h */,
-				6D56C6E41AEB41FD00D6D796 /* projectileDysfunction.m */,
-				6D56C6DE1AEB3E0100D6D796 /* IntroScene.h */,
-				6D56C6DF1AEB3E0100D6D796 /* IntroScene.m */,
-				6D56C6EE1AEB54E700D6D796 /* IntroScene.sks */,
-				6DD9B8D81AEA1600009E77E3 /* Turrets.h */,
-				6DD9B8D91AEA1600009E77E3 /* Turrets.m */,
-				6DD9B8991AE9693C009E77E3 /* Mobs.h */,
-				6DD9B89A1AE9693C009E77E3 /* Mobs.m */,
-				6D86630C1AE82F980032240B /* GameScene.sks */,
-				6D86630E1AE82F980032240B /* GameViewController.h */,
-				6D86630F1AE82F980032240B /* GameViewController.m */,
-				6D8663111AE82F980032240B /* Main.storyboard */,
-				6DD9B8C31AE98EE6009E77E3 /* sideback.png */,
-				6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */,
-				6DD9B8D61AE9F3F4009E77E3 /* towerBase.png */,
-				6D56C6D21AEAFA8800D6D796 /* fantom.png */,
-				6D56C6D01AEAF9CC00D6D796 /* harrier.png */,
-				6D56C6DC1AEB2B8F00D6D796 /* kanyehead.png */,
-				6DD9B8DB1AEA1B06009E77E3 /* lilturret.png */,
-				6D56C6E61AEB45A900D6D796 /* intro.png */,
-				6D56C6D41AEAFB8500D6D796 /* superhornet.png */,
-				6DD9B89C1AE9774C009E77E3 /* pingstealth.png */,
-				6D56C6EC1AEB50FC00D6D796 /* introsprite.atlas */,
-				6D56C6D81AEB148400D6D796 /* explosion.atlas */,
+				6D9A46031AED892E00763B44 /* Images */,
+				6D9A46011AED88E500763B44 /* Sprites */,
+				6D9A46001AED88C600763B44 /* Scenes */,
+				6D9A45FA1AED511D00763B44 /* SKSpriteNode+Animations.h */,
+				6D9A45FB1AED511D00763B44 /* SKSpriteNode+Animations.m */,
 				6D8663141AE82F980032240B /* Images.xcassets */,
-				6D8663161AE82F980032240B /* LaunchScreen.xib */,
+				6D9A46021AED891000763B44 /* Non SK Stuff */,
 				6D8663021AE82F980032240B /* Supporting Files */,
 			);
 			path = ShmawesomeTD;
@@ -184,6 +163,72 @@
 				6D8663221AE82F980032240B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6D9A46001AED88C600763B44 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				6D8663091AE82F980032240B /* GameScene.h */,
+				6D86630A1AE82F980032240B /* GameScene.m */,
+				6D86630C1AE82F980032240B /* GameScene.sks */,
+				6D56C6DE1AEB3E0100D6D796 /* IntroScene.h */,
+				6D56C6DF1AEB3E0100D6D796 /* IntroScene.m */,
+				6D56C6EE1AEB54E700D6D796 /* IntroScene.sks */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		6D9A46011AED88E500763B44 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				6D9A45FD1AED594800763B44 /* Bullet.h */,
+				6D9A45FE1AED594800763B44 /* Bullet.m */,
+				6DD9B8D81AEA1600009E77E3 /* Turrets.h */,
+				6DD9B8D91AEA1600009E77E3 /* Turrets.m */,
+				6DD9B8991AE9693C009E77E3 /* Mobs.h */,
+				6DD9B89A1AE9693C009E77E3 /* Mobs.m */,
+			);
+			name = Sprites;
+			sourceTree = "<group>";
+		};
+		6D9A46021AED891000763B44 /* Non SK Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				6D8663061AE82F980032240B /* AppDelegate.h */,
+				6D8663071AE82F980032240B /* AppDelegate.m */,
+				6D8663111AE82F980032240B /* Main.storyboard */,
+				6D8663161AE82F980032240B /* LaunchScreen.xib */,
+				6D86630E1AE82F980032240B /* GameViewController.h */,
+				6D86630F1AE82F980032240B /* GameViewController.m */,
+			);
+			name = "Non SK Stuff";
+			sourceTree = "<group>";
+		};
+		6D9A46031AED892E00763B44 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6D9A46041AED897900763B44 /* general images */,
+				6D56C6F81AECA3EB00D6D796 /* explosion.atlas */,
+				6D56C6F61AECA3A000D6D796 /* introsprite.atlas */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		6D9A46041AED897900763B44 /* general images */ = {
+			isa = PBXGroup;
+			children = (
+				6DD9B8C31AE98EE6009E77E3 /* sideback.png */,
+				6D56C6D61AEB05DA00D6D796 /* carrotMissile.png */,
+				6DD9B8D61AE9F3F4009E77E3 /* towerBase.png */,
+				6D56C6D21AEAFA8800D6D796 /* fantom.png */,
+				6D56C6D01AEAF9CC00D6D796 /* harrier.png */,
+				6D56C6DC1AEB2B8F00D6D796 /* kanyehead.png */,
+				6DD9B8DB1AEA1B06009E77E3 /* lilturret.png */,
+				6D56C6E61AEB45A900D6D796 /* intro.png */,
+				6DD9B89C1AE9774C009E77E3 /* pingstealth.png */,
+				6D56C6D41AEAFB8500D6D796 /* superhornet.png */,
+			);
+			name = "general images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,15 +315,15 @@
 				6D8663151AE82F980032240B /* Images.xcassets in Resources */,
 				6D86630D1AE82F980032240B /* GameScene.sks in Resources */,
 				6D56C6D71AEB05DA00D6D796 /* carrotMissile.png in Resources */,
+				6D56C6F71AECA3A000D6D796 /* introsprite.atlas in Resources */,
 				6DD9B8D71AE9F3F4009E77E3 /* towerBase.png in Resources */,
 				6D8663131AE82F980032240B /* Main.storyboard in Resources */,
 				6D56C6EF1AEB54E800D6D796 /* IntroScene.sks in Resources */,
 				6D56C6D11AEAF9CC00D6D796 /* harrier.png in Resources */,
-				6D56C6ED1AEB50FC00D6D796 /* introsprite.atlas in Resources */,
 				6DD9B8C41AE98EE6009E77E3 /* sideback.png in Resources */,
-				6D56C6D91AEB148400D6D796 /* explosion.atlas in Resources */,
 				6D56C6D31AEAFA8800D6D796 /* fantom.png in Resources */,
 				6D56C6DD1AEB2B8F00D6D796 /* kanyehead.png in Resources */,
+				6D56C6F91AECA3EB00D6D796 /* explosion.atlas in Resources */,
 				6D56C6D51AEAFB8500D6D796 /* superhornet.png in Resources */,
 				6DD9B89D1AE9774D009E77E3 /* pingstealth.png in Resources */,
 				6DD9B8DC1AEA1B06009E77E3 /* lilturret.png in Resources */,
@@ -301,11 +346,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DD9B89B1AE9693C009E77E3 /* Mobs.m in Sources */,
-				6D56C6E51AEB41FD00D6D796 /* projectileDysfunction.m in Sources */,
 				6D56C6E01AEB3E0100D6D796 /* IntroScene.m in Sources */,
 				6D8663101AE82F980032240B /* GameViewController.m in Sources */,
 				6D8663081AE82F980032240B /* AppDelegate.m in Sources */,
 				6DD9B8DA1AEA1600009E77E3 /* Turrets.m in Sources */,
+				6D9A45FF1AED594800763B44 /* Bullet.m in Sources */,
+				6D9A45FC1AED511D00763B44 /* SKSpriteNode+Animations.m in Sources */,
 				6D86630B1AE82F980032240B /* GameScene.m in Sources */,
 				6D8663051AE82F980032240B /* main.m in Sources */,
 			);

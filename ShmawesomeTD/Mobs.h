@@ -7,12 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-typedef enum mobType {
-    MobTypeA,
-    MobTypeB,
-    MobTypeC
-} MobType;
-static const u_int32_t kInvaderCategory            = 0x1 << 0;
+#import "SKSpriteNode+Animations.h"
+
 @class GameScene;
 @protocol DeathProtocol
 -(void)mobDeath;
@@ -23,13 +19,12 @@ static const u_int32_t kInvaderCategory            = 0x1 << 0;
 @property (nonatomic, weak) id<DeathProtocol> delegate;
 @property (nonatomic) NSUInteger mobHealth;
 @property (nonatomic) CGFloat mobSpeed;
-@property (assign, nonatomic) MobType mobType;
 +(instancetype)defaultMob;
 +(instancetype)lightMob;
 +(instancetype)mediumMob;
 +(instancetype)heavyMob;
 +(instancetype)kanyeMob;
-
-
 -(void)takeDamage:(NSUInteger)damage;
+-(void)prepMobs:(CGSize)size;
+
 @end
