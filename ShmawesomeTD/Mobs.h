@@ -11,20 +11,21 @@
 
 @class GameScene;
 @protocol DeathProtocol
--(void)mobDeath;
+-(void)mobDeathWithPoints:(NSUInteger)points;
 @end
 
 @interface Mobs : SKSpriteNode
 
 @property (nonatomic, weak) id<DeathProtocol> delegate;
 @property (nonatomic) NSUInteger mobHealth;
+@property (nonatomic) NSUInteger mobPointReward;
 @property (nonatomic) CGFloat mobSpeed;
 +(instancetype)defaultMob;
 +(instancetype)lightMob;
 +(instancetype)mediumMob;
 +(instancetype)heavyMob;
 +(instancetype)kanyeMob;
++(instancetype)bossMob;
 -(void)takeDamage:(NSUInteger)damage;
--(void)prepMobs:(CGSize)size;
 
 @end

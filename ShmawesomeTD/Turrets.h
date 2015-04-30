@@ -7,18 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "SKSpriteNode+Animations.h"
-typedef enum turretType {
-    LightTurret,
-    TurretTypeB,
-    TurretTypeC
-} TurretType;
-
 
 @interface Turrets : SKSpriteNode
 @property (assign, nonatomic) NSUInteger fireRate;
 @property (assign, nonatomic) NSUInteger projectileSpeed;
 @property (assign, nonatomic) NSUInteger damage;
-@property (assign, nonatomic) TurretType turretType;
+@property (assign, nonatomic) NSUInteger upgradeCost;
 +(instancetype)defaultTurret;
+-(void)launchCarrots;
+-(void)stopBullets;
 @end

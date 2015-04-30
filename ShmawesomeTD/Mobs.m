@@ -7,40 +7,39 @@
 //
 
 #import "Mobs.h"
-#import "SKSpriteNode+Animations.h"
+#import "SKScene+UtilityFunctions.h"
 
 
 @interface Mobs ()
 @property (strong, nonatomic) SKTextureAtlas *tex;
 @property (strong, nonatomic) NSMutableArray *explosion;
 
-
 @end
 @implementation Mobs
 @synthesize delegate;
 +(instancetype)mobWithImageNamed:(NSString *)name{
     Mobs *mob = [super spriteNodeWithImageNamed:name];
-    mob.anchorPoint = CGPointZero;
+//    mob.anchorPoint = CGPointZero;
     mob.zPosition = 5;
-    mob.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:mob.frame.size];
-    mob.physicsBody.dynamic = NO;
+    mob.name = @"defaultMobName";
+    mob.physicsBody.dynamic = YES;
     mob.physicsBody.categoryBitMask = kInvaderCategory;
     mob.physicsBody.contactTestBitMask = 0x0;
     mob.physicsBody.collisionBitMask = 0x0;
+    mob.mobPointReward = 1000;
     return mob;
 }
 +(instancetype)defaultMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"pingstealth"];
-    mob.name = @"defaultMob";
+//    mob.name = @"defaultMob";
     mob.mobHealth = 100;
-    mob.mobSpeed = 2.7;
-
+    mob.mobSpeed = 3.7;
     return mob;
 }
 
 +(instancetype)lightMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"superhornet"];
-    mob.name = @"lightMob";
+//    mob.name = @"lightMob";
     mob.mobHealth = 100;
     mob.mobSpeed = 4.7;
     return mob;
@@ -48,17 +47,17 @@
 
 +(instancetype)mediumMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"fantom"];
-    mob.name = @"mediumMob";
+//    mob.name = @"mediumMob";
     mob.mobHealth = 100;
-    mob.mobSpeed = 6.7;
+    mob.mobSpeed = 5.1;
     return mob;
 }
 
 +(instancetype)heavyMob{
     Mobs *mob = [Mobs mobWithImageNamed:@"harrier"];
-    mob.name = @"heavyMob";
+//    mob.name = @"heavyMob";
     mob.mobHealth = 100;
-    mob.mobSpeed = 5.0;
+    mob.mobSpeed = 9.5;
     return mob;
 }
 
@@ -68,24 +67,28 @@
     mob.mobSpeed = 2.0;
     return mob;
 }
-
--(void)setMobHealth:(NSUInteger)thing{
-    if (thing > 0) {
-        _mobHealth = thing;
-    } else {
-//        EXPLOSION!!! (switch sprite to exploision atlas. yay
-        [self explode];
-    }
++(instancetype)bossMob{
+    Mobs *mob = [Mobs mobWithImageNamed:@"boss"];
+    mob.mobHealth = 300;
+    mob.mobSpeed = 10.7;
+    
+    return mob;
+    
 }
 
+
 -(void)takeDamage:(NSUInteger)damage{
-    if (!self.mobHealth) return;
+    if (damage >= self.mobHealth){
+        [self explode];
+        return;
+    }
     self.mobHealth -= damage;
 }
 
 -(void)explode{
-    [self.delegate  mobDeath];
-    [self runAction:[SKAction animateWithTextures:self.explosion timePerFrame:0.08 resize:YES restore:NO]completion:^{
+    [self.delegate mobDeathWithPoints:self.mobPointReward];
+    [self removeAllActions];
+    [self runAction:[SKAction animateWithTextures:self.explosion timePerFrame:0.05 resize:YES restore:NO]completion:^{
          [self removeFromParent];
      }];    
 }
@@ -101,7 +104,7 @@
     if (_explosion) return _explosion;
     _explosion = [NSMutableArray array];
     if (self.tex){
-        _explosion = [SKSpriteNode textureArrayFromAtlas:self.tex];
+        _explosion = [SKScene textureArrayFromAtlas:self.tex];
     }
     return _explosion;
 }

@@ -9,6 +9,13 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 #import "IntroScene.h"
+#import "IntroViewController.h"
+
+
+@interface GameViewController ()
+@property (strong, nonatomic)NSTimer *scrollingTimer;
+@property (strong, nonatomic)UITextView *scrollingTextView;
+@end
 
 @implementation SKScene (Unarchive)
 
@@ -36,13 +43,56 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:)  name:UIApplicationDidBecomeActiveNotification  object:nil];
+
+    
     // Configure the view.
-//    [self beginGameplay];
+    
+    
+    [self beginIntroScene];
+   
+}
+
+
+- (void) autoscrollTimerFired
+{
+    
+    CGPoint scrollPoint = self.scrollingTextView.contentOffset;
+    scrollPoint.y = scrollPoint.y+10;
+    [self.scrollingTextView setContentOffset:scrollPoint animated:YES];
+//    CGPoint scrollPoint = self.scrollingTextView.contentOffset; // initial and after update
+//    NSLog(@"%.2f %.2f",scrollPoint.x,scrollPoint.y);
+//    if (scrollPoint.y == 583) // to stop at specific position
+//    {
+//        [self.scrollingTimer invalidate];
+//        self.scrollingTimer = nil;
+//    }
+//    scrollPoint = CGPointMake(scrollPoint.x, scrollPoint.y + 1); // makes scroll
+//    [self.scrollingTextView setContentOffset:scrollPoint animated:NO];
+//    NSLog(@"%f %f",self.scrollingTextView.contentSize.width , self.scrollingTextView.contentSize.height);
+//    
+}
+
+-(void)starWars{
+    
+    
+    UIView *BGView = [[UIView alloc]initWithFrame:self.view.frame];
+    BGView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:BGView];
+    [self.view addSubview:self.scrollingTextView];
+    if (self.scrollingTimer == nil){
+        self.scrollingTimer = [NSTimer scheduledTimerWithTimeInterval:(0.06)
+                                                               target:self selector:@selector(autoscrollTimerFired) userInfo:nil repeats:YES];
+    }
+}
+
+
+-(void)beginIntroScene{
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
@@ -53,9 +103,8 @@
     scene.scaleMode = SKSceneScaleModeAspectFill;
     // Present the scene.
     [skView presentScene:scene];
+    
 }
-
-
 
 -(void)beginGameplay{
     SKView * skView = (SKView *)self.view;

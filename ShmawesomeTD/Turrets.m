@@ -8,18 +8,60 @@
 
 #import "Turrets.h"
 #import "Mobs.h"
+#import "SKScene+UtilityFunctions.h"
+@interface Turrets ()
+-(BOOL)hasTarget;
 
 
+@end
 @implementation Turrets
-+(instancetype)turretWithImageNamed:(NSString *)name{
++(instancetype)turretWithImageNamed:(NSString *)name {
     Turrets *turret = [super spriteNodeWithImageNamed:name];
     turret.name = @"defaultTurret";
-    turret.zPosition = 4;
-
+    turret.zPosition = 5;
     return turret;
 }
 
++(instancetype)blankTurretWithScreenWidth:(int)width{
+    Turrets *turret = [super spriteNodeWithColor:[SKColor whiteColor] size:CGSizeMake(width/10, width/10)];
+    turret.name = @"blankTurret";
+    turret.upgradeCost = 2000;
+    return turret;
+}
 
+-(void)launchCarrots{
+    SKAction *carrotSequence = [SKAction runBlock:^{
+        SKSpriteNode *carrotz = [SKSpriteNode spriteNodeWithImageNamed:@"carrotMissile"];
+        carrotz.position = CGPointMake(self.size.width/2, self.size.height/2);
+        carrotz.name = @"carrot";
+        carrotz.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:carrotz.frame.size];
+        carrotz.physicsBody.dynamic = YES;
+        carrotz.zPosition = 5;
+        carrotz.physicsBody.categoryBitMask = kFiredBulletCategory;
+        carrotz.physicsBody.contactTestBitMask = kInvaderCategory;
+        carrotz.physicsBody.collisionBitMask = kInvaderCategory;
+//        carrotz.physicsBody.usesPreciseCollisionDetection = YES;
+        carrotz.physicsBody.affectedByGravity = NO;
+        [self addChild:carrotz];
+        SKAction *fire = [SKAction moveBy:CGVectorMake(0, 1000) duration:self.projectileSpeed];
+        [carrotz runAction:fire completion:^{
+            [carrotz removeFromParent];
+        }];
+    }];
+    SKAction *wait = [SKAction waitForDuration:self.fireRate];
+    SKAction *machineGun = [SKAction repeatActionForever:[SKAction sequence:@[carrotSequence,wait]]];
+    [self runAction:machineGun];
+}
+
+-(BOOL)hasTarget{
+//    [self.scene enumerateChildNodesWithName:@"defaultMobName" usingBlock:^(SKNode *node, BOOL *stop) {
+       // if (abs((node.position.x - self.position.x))<=self.size.width)
+    return YES;
+}
+
+-(void)stopBullets{
+    [self removeAllActions];
+}
 
 
 +(instancetype)defaultTurret{
@@ -29,43 +71,9 @@
 //    turret.size = CGSizeMake(40, 50);
     turret.fireRate = 4.7;
     turret.projectileSpeed = 2.3;
-    turret.turretType = LightTurret;
 
     return turret;
 }
 
--(void)fireCarrots{
-    
-    
-    SKAction *carrotSequence = [SKAction runBlock:^{
-        SKSpriteNode *carrotz = [SKSpriteNode spriteNodeWithImageNamed:@"carrotMissile"];
-        carrotz.position = CGPointMake(self.position.x, self.position.y);
-        carrotz.name = @"carrot";
-        carrotz.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:carrotz.frame.size];
-        carrotz.physicsBody.dynamic = YES;
-        carrotz.physicsBody.categoryBitMask = kFiredBulletCategory;
-        carrotz.physicsBody.contactTestBitMask = kInvaderCategory;
-        carrotz.physicsBody.collisionBitMask = 0x0;
-        carrotz.physicsBody.affectedByGravity = NO;
-        [self addChild:carrotz];
-        SKAction *fire = [SKAction moveToY:(self.scene.size.height + 100) duration:self.projectileSpeed];
-        [carrotz runAction:fire];
-    
-    }];
-    
-    SKAction *wait = [SKAction waitForDuration:self.fireRate];
-    SKAction *machineGun = [SKAction repeatActionForever:[SKAction sequence:@[carrotSequence,wait]]];
-    [self runAction:machineGun];
-            }
-
-
--(void)stopCarrots{
-    [self.children enumerateObjectsUsingBlock:^(SKNode *carrot, NSUInteger idx, BOOL *stop) {
-        if ([carrot.name isEqualToString:@"carrot"]){
-            [carrot removeFromParent];
-        }
-    }];
-    
-}
 
 @end
