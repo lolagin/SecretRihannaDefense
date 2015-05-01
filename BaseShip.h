@@ -9,6 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface BaseShip : SKSpriteNode
-+(instancetype)defaultBase;
 +(instancetype)defaultBaseWithWidth:(int)width;
 @end

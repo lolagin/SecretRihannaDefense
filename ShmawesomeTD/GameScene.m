@@ -5,7 +5,7 @@
 //  Created by Jeffrey C Rosenthal on 4/22/15.
 //  Copyright (c) 2015 Jeffreycorp. All rights reserved.
 //
-
+#import <AVFoundation/AVAudioPlayer.h>
 #import "GameScene.h"
 #import "Mobs.h"
 #import "Turrets.h"
@@ -38,6 +38,8 @@
 @property (strong, nonatomic) SKSpriteNode *bgNode2;
 @property (strong, nonatomic) SKSpriteNode *bgNode3;
 
+@property (strong, nonatomic)AVAudioPlayer *player;
+
 
 @property (strong) NSMutableArray* contactQueue;
 //-intro method in viewdidload-- series of label node actions, squad taking fire and going down. superships are tasked with whatever
@@ -51,16 +53,10 @@
 
 
 @implementation GameScene
--(void)switchBackground{
-    self.bgNode3.texture = self.bgNode1.texture;
-    self.bgNode3.alpha = 1.0;
-    [self addChild:self.bgNode3];
-    self.bgNode1.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"lultum%lu",self.mainHud.playerLevel]];
-    self.bgNode2.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"lultum%lu",self.mainHud.playerLevel]];
-    [self.bgNode3 runAction:[SKAction fadeOutWithDuration:1.0]completion:^{
-        [self.bgNode3 removeFromParent];
-    }];
-}
+
+
+
+
 
 
 -(void)didMoveToView:(SKView *)view {
@@ -70,6 +66,7 @@
 //    self.physicsBody.categoryBitMask = kSceneEdgeCategory;
 //    CGRect bodyRect = CGRectMake(-self.size.width, -self.size.height, self.size.width * 3, self.size.height * 3);
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.view.bounds];
+    [self.player play];
     [self addChild:self.towerBase];
     [self addChild:self.bgNode1];
     [self addChild:self.bgNode2];
@@ -77,7 +74,6 @@
     self.mainHud =  [Hud defaultHudWithWidth:self.size.width];
     self.mainHud.position = CGPointMake(0, self.size.height-self.mainHud.size.height);
     [self addChild:self.mainHud];
-    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -99,6 +95,7 @@
     /* Called when a touch begins */
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
+        NSLog(NSStringFromCGPoint(location));
         SKNode *node = [self nodeAtPoint:location];
         if ([node isEqualToNode:self.welcomeLabel]) {
             [self playTheFuckingGame];
@@ -118,7 +115,6 @@
 
 -(void)mobDeathWithPoints:(NSUInteger)points{
     [self.mainHud updateScore:points];
-    NSLog(@"a mob has ded");
 }
 
 
@@ -164,9 +160,21 @@
 #pragma mark ||game commands||
 
 
+
+-(void)switchBackground{
+    self.bgNode3.texture = self.bgNode1.texture;
+    self.bgNode3.alpha = 1.0;
+    [self addChild:self.bgNode3];
+    self.bgNode1.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"lultum%lu",(unsigned long)self.mainHud.playerLevel]];
+    self.bgNode2.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"lultum%lu",(unsigned long)self.mainHud.playerLevel]];
+    [self.bgNode3 runAction:[SKAction fadeOutWithDuration:1.0]completion:^{
+        [self.bgNode3 removeFromParent];
+    }];
+}
+
+
 -(void)transitionScenesEndGame{
     CIFilter *filter = [CIFilter filterWithName:@"CIBoxBlur"];
-
     SKTransition *tranny = [SKTransition transitionWithCIFilter:filter duration:1.5];
     GameOverScene *gameScene = [[GameOverScene alloc] initWithSize:self.scene.size];
     gameScene.scaleMode = SKSceneScaleModeAspectFill;
@@ -213,15 +221,12 @@
     }
     Mobs *mob = ((Mobs *)self.mobBank[0]);
     mob.delegate = self;
-    CGFloat randPos = ((arc4random_uniform(6) + 1) * (self.size.width / 7));
-    mob.position = CGPointMake(randPos, self.size.height);
+    CGFloat randPos = ((arc4random_uniform(6)+1) * (self.size.width / 7));
+    NSLog([NSString stringWithFormat:@"%f",randPos]);
+    mob.position = CGPointMake(randPos+mob.frame.size.width, self.size.height);
     mob.size = CGSizeMake(self.size.width / 12, self.size.height / 8);
     mob.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:mob.size];
     [self addChild:mob];
-    SKAction *flight = [SKAction moveToY:-200.0 duration:mob.mobSpeed];
-    [mob runAction:flight completion:^{
-        [mob removeFromParent];
-    }];
     [self runAction:[SKAction waitForDuration:1.0]completion:^{
         [self.mobBank removeObjectAtIndex:0];
         [self sendMobProperly];
@@ -277,16 +282,16 @@
     if (_waveBank) return _waveBank;
 //        just make all the mob arrays here? set self.mobbank to current and wipe it when iterated through. if !WB builds the waves, then ever get
         _waveBank = [NSMutableArray array];
-        [_waveBank addObject:[self randomWaveOfSize:4]];
-        [_waveBank addObject:[self randomWaveOfSize:4]];
-        [_waveBank addObject:[self randomWaveOfSize:4]];
+        [_waveBank addObject:[self randomWaveOfSize:9]];
+        [_waveBank addObject:[self randomWaveOfSize:9]];
+        [_waveBank addObject:[self randomWaveOfSize:9]];
     return _waveBank;
 }
 
 -(NSMutableArray *)randomWaveOfSize:(NSInteger)waveSize{
     NSMutableArray *lulRay = [NSMutableArray array];
     for (int i = 0; i < waveSize; i++) {
-        NSInteger lul = arc4random_uniform(5);
+        NSInteger lul = arc4random_uniform(7);
         switch (lul) {
             case 0:
                 [lulRay addObject:[Mobs defaultMob]];
@@ -303,6 +308,13 @@
             case 4:
                 [lulRay addObject:[Mobs kanyeMob]];
                 break;
+            case 5:
+                [lulRay addObject:[Mobs bobMob]];
+                break;
+            case 6:
+                [lulRay addObject:[Mobs patMob]];
+                break;
+                
             default:
                 break;
         }
@@ -329,6 +341,19 @@
     _lighting.ambientColor = [SKColor whiteColor];
     _lighting.lightColor = [SKColor whiteColor];
     return _lighting;
+}
+
+-(AVAudioPlayer *)player{
+    if (_player) return _player;
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lean3.caf", [[NSBundle mainBundle] resourcePath]]];
+    NSError *error;
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    _player.numberOfLoops = -1;
+    if (!_player){
+        NSLog([error localizedDescription]);
+        return nil;
+    }
+    return _player;
 }
 
 @end

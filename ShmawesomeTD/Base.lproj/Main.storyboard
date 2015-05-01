@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LVB-YS-i5n">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
@@ -18,50 +17,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="gUm-zH-VzK" kind="show" identifier="introSeeg" id="LBC-Wi-DMI"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
             </objects>
-        </scene>
-        <!--Intro View Controller-->
-        <scene sceneID="WJ8-Jc-oRJ">
-            <objects>
-                <viewController id="gUm-zH-VzK" customClass="IntroViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Dha-0t-SfK"/>
-                        <viewControllerLayoutGuide type="bottom" id="5KZ-lY-Xpo"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VlO-qR-wOH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTc-cS-Xqk">
-                                <rect key="frame" x="16" y="0.0" width="568" height="600"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" red="0.99513959880000002" green="0.96212041709999996" blue="0.19250163379999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" red="0.99513959880000002" green="0.96212041709999996" blue="0.19250163379999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="HTc-cS-Xqk" secondAttribute="trailing" id="LDi-sZ-OWZ"/>
-                            <constraint firstItem="5KZ-lY-Xpo" firstAttribute="top" secondItem="HTc-cS-Xqk" secondAttribute="bottom" id="MxA-uv-Bzm"/>
-                            <constraint firstItem="HTc-cS-Xqk" firstAttribute="top" secondItem="VlO-qR-wOH" secondAttribute="topMargin" id="epW-2o-8la"/>
-                            <constraint firstItem="HTc-cS-Xqk" firstAttribute="leading" secondItem="VlO-qR-wOH" secondAttribute="leadingMargin" id="xmv-TY-ndX"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="scrollingTextView" destination="HTc-cS-Xqk" id="s75-LW-h6p"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ve5-7X-sEX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="932" y="236"/>
         </scene>
     </scenes>
 </document>

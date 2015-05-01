@@ -24,12 +24,11 @@
 
 -(void)levelup{
     self.playerLevel++;
-    self.levelLabel.text = [NSString stringWithFormat:@"%lu",self.playerLevel];
+    self.levelLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.playerLevel];
 }
 -(void)updateScore:(NSUInteger)points{
-    NSLog(@"a def has happen");
     self.playerScore += points;
-    self.scoreLabel.text = [NSString stringWithFormat:@"%lu",self.playerScore];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.playerScore];
 }
 
 

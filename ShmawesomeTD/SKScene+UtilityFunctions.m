@@ -17,7 +17,6 @@ AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:self
 utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
     utterance.rate = 0.15;
     AVSpeechSynthesizer *syn = [[AVSpeechSynthesizer alloc] init];
-
     [syn pauseSpeakingAtBoundary:AVSpeechBoundaryWord];
 [syn speakUtterance:utterance];
 
@@ -26,8 +25,18 @@ utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
 @end
 
 
-
+@interface SKScene ()
+@end
 @implementation SKScene (UtilityFunctions)
+
++(AVAudioPlayer *)playerWithAudio:(NSString *)audio{
+    NSError *error;
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.caf",audio,[[NSBundle mainBundle] resourcePath]]];
+    AVAudioPlayer *player = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+    player.numberOfLoops = -1;
+    return player;    
+}
+
 
 -(void)bumpNodes:(SKSpriteNode *)nodeAlpha and:(SKSpriteNode *)nodeBeta{
     nodeAlpha.position = CGPointMake(nodeAlpha.position.x, nodeAlpha.position.y-4);

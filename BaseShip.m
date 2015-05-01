@@ -17,7 +17,7 @@
 
 @implementation BaseShip
 +(instancetype)BSWithSize:(int)width andImage:(NSString *)imageNamed{
-    BaseShip *basic = [[BaseShip alloc] initWithTexture:[SKTexture textureWithImageNamed:imageNamed] color:[SKColor clearColor] size:CGSizeMake(width, width/5)];
+    BaseShip *basic = [[BaseShip alloc] initWithTexture:[SKTexture textureWithImageNamed:imageNamed] color:[SKColor clearColor] size:CGSizeMake(width, width/3)];
     basic.anchorPoint = CGPointZero;
     return basic;
 }
@@ -27,7 +27,7 @@
     towerBase.userInteractionEnabled = YES;
     for (int i = 0; i<5; i++) {
         [towerBase addChild:[Turrets defaultTurret]];
-        ((SKNode *)[towerBase children][i]).position = CGPointMake((towerBase.size.width / 6) * (i+1), towerBase.size.height/2);
+        ((SKNode *)[towerBase children][i]).position = CGPointMake((towerBase.size.width / 6) * (i+1), towerBase.size.height/3);
     }
     return towerBase;
 }
@@ -36,10 +36,7 @@
     NSLog(@"tooucehswerks");
     
 }
-+(instancetype)defaultBase{
-    BaseShip *towerBase = [BaseShip defaultBaseWithWidth:[UIScreen mainScreen].bounds.size.width];
-        return towerBase;
-}
+
 
 
 @end

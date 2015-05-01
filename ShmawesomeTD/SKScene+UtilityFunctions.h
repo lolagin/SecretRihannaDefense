@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-
 typedef NS_OPTIONS(NSUInteger, CollisionGameCategories) {
     kSceneEdgeCategory     = 0,
     kFiredBulletCategory    = 1 << 0,
@@ -20,6 +19,7 @@ typedef NS_OPTIONS(NSUInteger, CollisionGameCategories) {
 @end
 
 @interface SKScene (UtilityFunctions)
+
 -(void)bumpNodes:(SKSpriteNode *)nodeAlpha and:(SKSpriteNode *)nodeBeta;
 +(NSMutableArray *)textureArrayFromAtlas:(SKTextureAtlas *)atlas;
 +(SKEmitterNode *)emitterNodeWithEmitterNamed:(NSString *)emitterFileName;

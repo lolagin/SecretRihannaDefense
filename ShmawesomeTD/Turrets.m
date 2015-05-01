@@ -39,7 +39,7 @@
         carrotz.zPosition = 5;
         carrotz.physicsBody.categoryBitMask = kFiredBulletCategory;
         carrotz.physicsBody.contactTestBitMask = kInvaderCategory;
-        carrotz.physicsBody.collisionBitMask = kInvaderCategory;
+        carrotz.physicsBody.collisionBitMask = 0x0;
 //        carrotz.physicsBody.usesPreciseCollisionDetection = YES;
         carrotz.physicsBody.affectedByGravity = NO;
         [self addChild:carrotz];
@@ -69,7 +69,7 @@
 //    turret.anchorPoint = CGPointMake(turret.size.width/2, turret.size.height/2);
     turret.damage = 34;
 //    turret.size = CGSizeMake(40, 50);
-    turret.fireRate = 4.7;
+    turret.fireRate = 3.7;
     turret.projectileSpeed = 2.3;
 
     return turret;

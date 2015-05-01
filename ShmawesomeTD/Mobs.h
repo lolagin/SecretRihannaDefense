@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "SKSpriteNode+Animations.h"
 
 @class GameScene;
 @protocol DeathProtocol
@@ -26,6 +25,8 @@
 +(instancetype)heavyMob;
 +(instancetype)kanyeMob;
 +(instancetype)bossMob;
++(instancetype)bobMob;
++(instancetype)patMob;
 -(void)takeDamage:(NSUInteger)damage;
 
 @end
